@@ -60,11 +60,25 @@ typedef struct _HPDF_CharData {
     HPDF_INT16     width;
 } HPDF_CharData;
 
+typedef struct _HPDF_RasterCharData {
+	HPDF_UINT8     codepoint;
+	HPDF_REAL      width;
+	HPDF_REAL      left;
+	HPDF_REAL      top;
+	HPDF_REAL      bottom;
+	HPDF_REAL      right;
+	HPDF_UINT16    pixels_x;
+	HPDF_UINT16    pixels_y;
+	char		  *raster_data;
+	int            raster_data_size;
+} HPDF_RasterCharData;
+
 typedef enum  _HPDF_FontDefType {
     HPDF_FONTDEF_TYPE_TYPE1,
     HPDF_FONTDEF_TYPE_TRUETYPE,
     HPDF_FONTDEF_TYPE_CID,
     HPDF_FONTDEF_TYPE_UNINITIALIZED,
+	HPDF_FONTDEF_TYPE_TYPE3RASTER,
     HPDF_FONTDEF_TYPE_EOF
 } HPDF_FontDefType;
 
@@ -189,6 +203,21 @@ HPDF_Type1FontDef_GetWidth  (HPDF_FontDef  fontdef,
 HPDF_FontDef
 HPDF_Base14FontDef_New  (HPDF_MMgr        mmgr,
                          const char  *font_name);
+
+
+HPDF_FontDef 
+HPDF_Type3RasterFontDef_New (HPDF_MMgr    mmgr,
+                             const char  *font_name,
+							 HPDF_REAL    pt_size,
+							 HPDF_UINT16  dpi_x,
+							 HPDF_UINT16  dpi_y);
+HPDF_INT16
+HPDF_Type3RasterFontDef_GetWidth (HPDF_FontDef  fontdef,
+                                  HPDF_UNICODE  unicode);
+
+HPDF_STATUS
+HPDF_Type3RasterFontDef_AddChar(HPDF_FontDef               fontdef,
+                                const HPDF_RasterCharData *data);
 
 
 
@@ -363,6 +392,24 @@ HPDF_TTFontDef_GetCharBBox  (HPDF_FontDef   fontdef,
 void
 HPDF_TTFontDef_SetTagName  (HPDF_FontDef   fontdef,
                             char     *tag);
+
+
+
+/*----------------------------------------------------------------------------*/
+/*----- HPDF_Type3RasterFontDef  ---------------------------------------------*/
+
+typedef struct _HPDF_Type3RasterFontDefAttr_Rec   *HPDF_Type3RasterFontDefAttr;
+
+typedef struct _HPDF_Type3RasterFontDefAttr_Rec {
+	HPDF_BYTE             first_char;
+	HPDF_BYTE             last_char;
+	HPDF_RasterCharData  *chars;
+	HPDF_UINT             chars_count;
+	HPDF_REAL             pt_size;
+	HPDF_UINT16           dpi_x;
+	HPDF_UINT16           dpi_y;
+} HPDF_Type3RasterFontDefAttr_Rec;
+
 
 
 /*----------------------------------------------------------------------------*/

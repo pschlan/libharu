@@ -103,6 +103,11 @@ HPDF_Type0Font_New  (HPDF_MMgr        mmgr,
                      HPDF_Encoder     encoder,
                      HPDF_Xref        xref);
 
+HPDF_Font
+HPDF_Type3RasterFont_New (HPDF_MMgr        mmgr,
+                          HPDF_FontDef     fontdef,
+						  HPDF_Encoder     encoder,
+						  HPDF_Xref        xref);
 
 HPDF_BOOL
 HPDF_Font_Validate  (HPDF_Font font);

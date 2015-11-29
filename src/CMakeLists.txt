@@ -29,6 +29,7 @@ set(
   	hpdf_font_cid.c
   	hpdf_font_tt.c
   	hpdf_font_type1.c
+	hpdf_font_type3raster.c
   	hpdf_font.c
   	hpdf_fontdef_base14.c
   	hpdf_fontdef_cid.c
@@ -38,6 +39,7 @@ set(
   	hpdf_fontdef_kr.c
   	hpdf_fontdef_tt.c
   	hpdf_fontdef_type1.c
+	hpdf_fontdef_type3raster.c
   	hpdf_fontdef.c
   	hpdf_gstate.c
 	hpdf_image_ccitt.c
