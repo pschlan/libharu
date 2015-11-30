@@ -117,8 +117,6 @@ HPDF_Type3RasterFont_New(HPDF_MMgr        mmgr,
 
 	HPDF_MemSet(attr->widths, 0, sizeof(HPDF_INT16) * 256);
 	for (i = 0 /*encoder_attr->first_char*/; i <= 255 /*encoder_attr->last_char*/; i++) {
-		//HPDF_UNICODE u = encoder_attr->unicode_map[i];
-
 		HPDF_UINT16 w = HPDF_Type3RasterFontDef_GetWidth(fontdef, i);
 		attr->widths[i] = w;
 	}
@@ -128,8 +126,6 @@ HPDF_Type3RasterFont_New(HPDF_MMgr        mmgr,
 	ret += HPDF_Dict_AddName(font, "Name", fontdef->base_font);
 	ret += HPDF_Dict_AddName(font, "Type", "Font");
 	ret += HPDF_Dict_AddName(font, "Subtype", "Type3");
-	//ret += HPDF_Dict_AddNumber(font, "FirstChar", 0);
-	//ret += HPDF_Dict_AddNumber(font, "LastChar", 255);
 
 	HPDF_REAL scale_x = 72.0f / (HPDF_REAL)fontdef_attr->dpi_x;
 	HPDF_REAL scale_y = 72.0f / (HPDF_REAL)fontdef_attr->dpi_y;
@@ -189,17 +185,6 @@ HPDF_Type3RasterFont_New(HPDF_MMgr        mmgr,
 		HPDF_Stream_WriteReal(char_stream_dict->stream, fontdef_attr->chars[i].bottom / scale_y);
 		HPDF_Stream_WriteStr(char_stream_dict->stream, " cm\012");
 
-		/*HPDF_Stream_WriteStr(char_stream_dict->stream, "q\012");
-		HPDF_Stream_WriteStr(char_stream_dict->stream, "1 0 0 1 ");
-		HPDF_Stream_WriteReal(char_stream_dict->stream, fontdef_attr->chars[i].left);
-		HPDF_Stream_WriteStr(char_stream_dict->stream, " ");
-		HPDF_Stream_WriteReal(char_stream_dict->stream, fontdef_attr->chars[i].bottom);
-		HPDF_Stream_WriteStr(char_stream_dict->stream, " cm\012");*/
-
-		/*HPDF_Stream_WriteReal(char_stream_dict->stream, fontdef_attr->chars[i].pixels_x * 0.24f);
-		HPDF_Stream_WriteStr(char_stream_dict->stream, " 0 0 ");
-		HPDF_Stream_WriteReal(char_stream_dict->stream, fontdef_attr->chars[i].pixels_y * 0.24f);
-		HPDF_Stream_WriteStr(char_stream_dict->stream, " 0 0 cm\012");*/
 		HPDF_Stream_WriteStr(char_stream_dict->stream, "BI\012");
 		HPDF_Stream_WriteStr(char_stream_dict->stream, "/IM true\012");
 		HPDF_Stream_WriteStr(char_stream_dict->stream, "/W ");
@@ -399,7 +384,7 @@ Type3RasterFont_OnWrite(HPDF_Dict    obj,
 			return ret;
 	}
 
-	return ret; // attr->encoder->write_fn(attr->encoder, stream);
+	return ret;
 }
 
 static void
