@@ -153,7 +153,7 @@ HPDF_Type3RasterFont_New(HPDF_MMgr        mmgr,
 
 	HPDF_Array diff_array = HPDF_Array_New(mmgr);
 	ret += HPDF_Array_AddNumber(diff_array, 0);
-	for (int i = 0; i < 256; ++i) {
+	for (i = 0; i < 256; ++i) {
 		char name[3];
 		sprintf(name, "%02X", i);
 		ret += HPDF_Array_AddName(diff_array, name);
@@ -163,7 +163,7 @@ HPDF_Type3RasterFont_New(HPDF_MMgr        mmgr,
 	ret += HPDF_Dict_Add(font, "Encoding", encoding);
 
 	HPDF_Dict char_procs = HPDF_Dict_New(mmgr);
-	for (int i = 0; i < 256; ++i) {
+	for (i = 0; i < 256; ++i) {
 		char name[3];
 		sprintf(name, "%02X", i);
 
